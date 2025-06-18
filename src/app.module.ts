@@ -2,7 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import { Configuration } from '@/configs';
-import { AppLoggerModule } from '@/pkg/app-logger';
+import { UserModule } from '@/modules/user/user.module';
+import { AppLoggerModule } from '@/pkg/core/app-logger';
+import { AuthHelperModule } from '@/pkg/core/auth-helper';
 
 @Module({
   imports: [
@@ -11,6 +13,8 @@ import { AppLoggerModule } from '@/pkg/app-logger';
       load: [Configuration.init],
     }),
     AppLoggerModule,
+    AuthHelperModule,
+    UserModule,
   ],
 })
 export class AppModule {}

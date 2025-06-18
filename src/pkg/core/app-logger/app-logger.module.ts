@@ -1,8 +1,9 @@
 import { Global, Module } from '@nestjs/common';
 import { ClsModule } from 'nestjs-cls';
 
-import { AppLoggerService } from '@/pkg/app-logger/app-logger.service';
 import { generateRequestId } from '@/pkg/helpers';
+
+import { AppLoggerService } from './app-logger.service';
 
 @Global()
 @Module({

@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 
 import { Configuration } from '@/configs';
-import { AppLoggerService } from '@/pkg/app-logger';
+import { AppLoggerService } from '@/pkg/core/app-logger';
 
 import { AppModule } from './app.module';
 

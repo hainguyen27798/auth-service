@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 import * as yaml from 'js-yaml';
 import { join } from 'path';
 
-import { ENV_MODE } from '@/constants';
+import { ENV_MODE } from '@/pkg/constants';
 import type { TConfig } from '@/types';
 
 export class Configuration {
