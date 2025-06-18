@@ -7,4 +7,5 @@ mongo:
   password: nestAuth@123
   host: mongo
   port: 27017
+  authSource: admin
   directConnection: false
