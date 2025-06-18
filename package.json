@@ -1,12 +1,13 @@
 {
   "name": "auth-service",
-  "version": "0.0.1",
+  "version": "2.0.1",
   "description": "",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
+    "build:prod": "sh ./build-prod.sh",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "NODE_ENV=local nest start --watch",
