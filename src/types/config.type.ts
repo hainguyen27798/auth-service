@@ -17,4 +17,8 @@ export type TMongo = {
 export type TConfig = {
   server: TServer;
   mongo: TMongo;
+  superuser: {
+    email: string;
+    pass: string;
+  };
 };

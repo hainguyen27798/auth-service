@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 
 import { Configuration } from '@/configs';
+import { UserService } from '@/modules/user/user.service';
 import { AppLoggerService } from '@/pkg/core/app-logger';
 
 import { AppModule } from './app.module';
@@ -29,6 +30,10 @@ async function bootstrap() {
   app.use(AppLoggerService.morganMiddleware);
 
   await app.listen(Configuration.instance.server.port);
+
+  // create superuser
+  const userService = app.get(UserService);
+  await userService.createSuperUser();
 }
 
 bootstrap()

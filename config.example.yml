@@ -9,3 +9,6 @@ mongo:
   port: 27017
   authSource: admin
   directConnection: false
+superuser:
+  email: admin@nestjs.com
+  pass: admin
