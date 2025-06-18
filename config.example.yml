@@ -1,0 +1,10 @@
+server:
+  port: 8080
+  enableLogging: false
+mongo:
+  dbName: auth_db
+  username: nestAuth
+  password: nestAuth@123
+  host: mongo
+  port: 27017
+  directConnection: false
