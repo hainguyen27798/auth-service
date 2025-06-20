@@ -6,6 +6,7 @@ import { DatabaseModule } from '@/database';
 import { UserModule } from '@/modules/user/user.module';
 import { AppLoggerModule } from '@/pkg/core/app-logger';
 import { AuthHelperModule } from '@/pkg/core/auth-helper';
+import { MonitoringModule } from '@/pkg/core/monitoring/monitoring.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { AuthHelperModule } from '@/pkg/core/auth-helper';
       isGlobal: true,
       load: [Configuration.init],
     }),
+    MonitoringModule,
     AppLoggerModule,
     AuthHelperModule,
     DatabaseModule,
