@@ -1,26 +1,60 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
-import * as client from 'prom-client';
+import { Injectable } from '@nestjs/common';
+import { collectDefaultMetrics, Counter, Gauge, Histogram, register } from 'prom-client';
 
 @Injectable()
-export class PrometheusService implements OnModuleInit {
-  private httpHistogram: client.Histogram<string>;
+export class PrometheusService {
+  // HTTP Request metrics
+  public readonly httpRequestsTotal = new Counter({
+    name: 'http_requests_total',
+    help: 'Total number of HTTP requests',
+    labelNames: ['method', 'route', 'status_code', 'success'],
+  });
 
-  onModuleInit() {
-    client.collectDefaultMetrics(); // nodejs metrics
+  public readonly httpRequestDuration = new Histogram({
+    name: 'http_request_duration_seconds',
+    help: 'Duration of HTTP requests in seconds',
+    labelNames: ['method', 'route', 'status_code'],
+    buckets: [0.1, 0.3, 0.5, 0.7, 1, 3, 5, 7, 10],
+  });
 
-    this.httpHistogram = new client.Histogram({
-      name: 'http_request_duration_seconds',
-      help: 'API response time in seconds',
-      labelNames: ['method', 'route', 'status'],
-      buckets: [0.1, 0.3, 0.5, 1, 2, 5],
+  // Application metrics
+  public readonly activeConnections = new Gauge({
+    name: 'active_connections',
+    help: 'Number of active connections',
+  });
+
+  public readonly databaseConnections = new Gauge({
+    name: 'database_connections_active',
+    help: 'Number of active database connections',
+  });
+
+  // Custom business metrics
+  public readonly businessOperationsTotal = new Counter({
+    name: 'business_operations_total',
+    help: 'Total number of business operations',
+    labelNames: ['operation_type', 'status'],
+  });
+
+  public readonly queueSize = new Gauge({
+    name: 'queue_size',
+    help: 'Current queue size',
+    labelNames: ['queue_name'],
+  });
+
+  // Memory and CPU metrics (collected automatically)
+  constructor() {
+    // Collect default metrics (CPU, memory, etc.)
+    collectDefaultMetrics({
+      register,
+      prefix: 'nodejs_',
     });
   }
 
-  startHttpTimer(labels: Record<string, string>) {
-    return this.httpHistogram.startTimer(labels);
+  getMetrics() {
+    return register.metrics();
   }
 
-  async getMetrics(): Promise<string> {
-    return await client.register.metrics();
+  getContentType() {
+    return register.contentType;
   }
 }

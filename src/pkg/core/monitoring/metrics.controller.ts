@@ -1,15 +1,14 @@
-import { Controller, Get, Res } from '@nestjs/common';
-import { Response } from 'express';
+import { Controller, Get, Header } from '@nestjs/common';
 
-import { PrometheusService } from '@/pkg/core/monitoring/prometheus.service';
+import { PrometheusService } from './prometheus.service';
 
 @Controller('metrics')
 export class MetricsController {
   constructor(private readonly _PrometheusService: PrometheusService) {}
 
   @Get()
-  async exposeMetrics(@Res() res: Response) {
-    res.set('Content-Type', 'text/plain');
-    res.send(await this._PrometheusService.getMetrics());
+  @Header('Content-Type', 'text/plain')
+  async exposeMetrics() {
+    return this._PrometheusService.getMetrics();
   }
 }
