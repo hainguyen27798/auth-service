@@ -1,6 +1,9 @@
 import { Logger } from '@nestjs/common';
 import { readFileSync } from 'fs';
 import * as yaml from 'js-yaml';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import * as pkg from 'package.json';
 import { join } from 'path';
 
 import { ENV_MODE } from '@/pkg/constants';
@@ -27,6 +30,8 @@ export class Configuration {
         throw error;
       }
     }
+
+    Configuration._config.server.version = pkg.version || '0.0.0';
 
     return Configuration._config;
   }

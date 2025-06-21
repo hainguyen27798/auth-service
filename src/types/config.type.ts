@@ -2,6 +2,7 @@ export type TServer = {
   port: number;
   enableLogging: boolean;
   env: string;
+  version: string;
 };
 
 export type TMongo = {

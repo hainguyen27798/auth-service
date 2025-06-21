@@ -28,6 +28,12 @@ export class PrometheusService {
     help: 'Number of active database connections',
   });
 
+  private readonly appVersion = new Gauge({
+    name: 'app_version',
+    help: 'current application version (package.json > version)',
+    labelNames: ['version'],
+  });
+
   // Custom business metrics
   public readonly businessOperationsTotal = new Counter({
     name: 'business_operations_total',
@@ -56,5 +62,9 @@ export class PrometheusService {
 
   getContentType() {
     return register.contentType;
+  }
+
+  setAppVersion(version?: string) {
+    this.appVersion.set({ version }, version ? 1 : 0);
   }
 }

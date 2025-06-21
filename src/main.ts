@@ -5,6 +5,7 @@ import type { NestExpressApplication } from '@nestjs/platform-express';
 import { Configuration } from '@/configs';
 import { UserService } from '@/modules/user/user.service';
 import { AppLoggerService } from '@/pkg/core/app-logger';
+import { PrometheusService } from '@/pkg/core/monitoring/prometheus.service';
 
 import { AppModule } from './app.module';
 
@@ -34,6 +35,9 @@ async function bootstrap() {
   // create superuser
   const userService = app.get(UserService);
   await userService.createSuperUser();
+
+  const prometheusService = app.get(PrometheusService);
+  prometheusService.setAppVersion(Configuration.instance.server.version);
 }
 
 bootstrap()

@@ -1,16 +1,14 @@
 import { HttpModule } from '@nestjs/axios';
-import { Global, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { TerminusModule } from '@nestjs/terminus';
-
-import { MetricsExceptionFilter } from '@/pkg/core/monitoring/metrics-exception.filter';
 
 import { HealthController } from './health.controller';
 import { MetricsController } from './metrics.controller';
 import { MetricsInterceptor } from './metrics.interceptor';
+import { MetricsExceptionFilter } from './metrics-exception.filter';
 import { PrometheusService } from './prometheus.service';
 
-@Global()
 @Module({
   imports: [TerminusModule, HttpModule],
   controllers: [MetricsController, HealthController],
